@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SiteAuditBot</title>
+  <meta name="description" content="What SiteAuditBot is, what it checks, and how to opt out.">
+  <meta name="robots" content="index, follow">
+  <style>
+    :root { --bg: #ffffff; --fg: #111827; --muted: #4b5563; --line: #e5e7eb; --accent: #1d4ed8; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0b0f17; --fg: #e5e7eb; --muted: #9ca3af; --line: #1f2937; --accent: #93b4ff; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    main { max-width: 42rem; margin: 0 auto; padding: 3rem 1rem 4rem; }
+    h1 { font-size: 1.75rem; line-height: 1.2; margin: 0 0 .25rem; }
+    h2 { font-size: 1.125rem; margin: 2rem 0 .5rem; }
+    p, li { color: var(--fg); }
+    .lead { color: var(--muted); margin-top: 0; }
+    code { font: .9em ui-monospace, SFMono-Regular, Menlo, monospace; background: color-mix(in srgb, var(--line) 60%, transparent); padding: .1em .35em; border-radius: 4px; overflow-wrap: anywhere; }
+    pre { background: color-mix(in srgb, var(--line) 60%, transparent); padding: .75rem 1rem; border-radius: 6px; overflow-x: auto; }
+    pre code { background: none; padding: 0; }
+    a { color: var(--accent); }
+    ul { padding-left: 1.25rem; }
+    footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .875rem; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>SiteAuditBot</h1>
+  <p class="lead">If you found this page in your server logs: hello. Here is who I am and what my bot did.</p>
+
+  <p>
+    <code>SiteAuditBot</code> is a website health checker run by one person, Dewan Imtiaz, a freelance web developer.
+    I use it to review the speed, SEO, security settings, accessibility and email setup of websites,
+    and sometimes I send the owner a short, free report with suggestions.
+  </p>
+  <p>It identifies itself with this User-Agent:</p>
+  <pre><code>SiteAuditBot/1.0 (+https://dimtiaz.github.io/audit-bot/)</code></pre>
+
+  <h2>What it does</h2>
+  <ul>
+    <li>Loads a few <strong>public</strong> pages, like a normal visitor or search engine would, and reads the response headers and HTML.</li>
+    <li>Reads public information: the TLS certificate, DNS records (for example SPF and DMARC), <code>robots.txt</code> and <code>sitemap.xml</code>.</li>
+    <li>Asks Google's PageSpeed Insights for a speed test of the page.</li>
+  </ul>
+
+  <h2>What it never does</h2>
+  <ul>
+    <li>No logins, password guessing, form submissions or attack payloads.</li>
+    <li>No attempts to get past firewalls, CAPTCHAs or bot protection. If it is blocked, it stops and reports "blocked".</li>
+    <li>No probing for private files unless the site owner has asked for a full audit in writing.</li>
+    <li>It does not store passwords, keys or other secrets, even if a site exposes one by mistake. If I notice something like that, I tell the owner privately.</li>
+  </ul>
+
+  <h2>How gentle it is</h2>
+  <ul>
+    <li>At most 2 requests at a time to your site, with at least half a second between requests.</li>
+    <li>A normal check is a handful of requests, not a crawl.</li>
+    <li>If your server answers "too many requests" (429) or "unavailable" (503), it stops for that site.</li>
+    <li>It always follows <code>robots.txt</code> when crawling more than one page.</li>
+  </ul>
+
+  <h2>Opt out</h2>
+  <p>Email me at <a href="mailto:dewan.imtiaz09@gmail.com">dewan.imtiaz09@gmail.com</a> with your domain and I will add it to a block list. The bot will not scan it again.</p>
+  <p>You can also block it in <code>robots.txt</code>. This works for multi-page crawls; for a full block, please email me too:</p>
+  <pre><code>User-agent: SiteAuditBot
+Disallow: /</code></pre>
+
+  <h2>Your data</h2>
+  <ul>
+    <li>Results are kept privately on my own machine and are not published.</li>
+    <li>A report is shared only with the site owner, through a private link or PDF.</li>
+    <li>Ask me and I will delete everything I hold about your site: results, screenshots and reports.</li>
+  </ul>
+
+  <footer>Questions? <a href="mailto:dewan.imtiaz09@gmail.com">dewan.imtiaz09@gmail.com</a></footer>
+</main>
+</body>
+</html>
